@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"hw02_fix_app/types"
+	"github.com/JuramentoEl/GoBasichw02_fix_app/types"
 )
 
 func ReadJSON(filePath string) ([]types.Employee, error) {

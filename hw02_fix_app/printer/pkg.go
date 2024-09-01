@@ -2,7 +2,8 @@ package printer
 
 import (
 	"fmt"
-	"hw02_fix_app/types"
+
+	"github.com/JuramentoEl/GoBasichw02_fix_app/types"
 )
 
 func PrintStaff(staff []types.Employee) {

@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"hw02_fix_app/printer"
-	"hw02_fix_app/reader"
-	"hw02_fix_app/types"
+
+	"github.com/JuramentoEl/GoBasichw02_fix_app/printer"
+	"github.com/JuramentoEl/GoBasichw02_fix_app/reader"
+	"github.com/JuramentoEl/GoBasichw02_fix_app/types"
 )
 
 func main() {

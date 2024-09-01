@@ -2,7 +2,6 @@ package printer
 
 import (
 	"fmt"
-
 	"hw02_fix_app/types"
 )
 

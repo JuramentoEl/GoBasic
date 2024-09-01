@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"hw02_fix_app/printer"
 	"hw02_fix_app/reader"
 	"hw02_fix_app/types"
@@ -26,5 +25,4 @@ func main() {
 	fmt.Print(err)
 
 	printer.PrintStaff(staff)
-
 }

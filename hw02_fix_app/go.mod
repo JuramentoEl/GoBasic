@@ -1,3 +1,3 @@
-module github.com/JuramentoEl/GoBasichw02_fix_app
+module github.com/JuramentoEl/GoBasic/hw02_fix_app
 
 go 1.20

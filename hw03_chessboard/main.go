@@ -16,7 +16,7 @@ func main() {
 
 	for i := 1; i <= size; i++ {
 		for j := 1; j <= size; j++ {
-			fmt.Print("#")
+			fmt.Print(" ")
 		}
 		fmt.Println()
 	}

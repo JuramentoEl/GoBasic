@@ -14,9 +14,18 @@ func main() {
 		size = 8
 	}
 
+	isSpace := false
 	for i := 1; i <= size; i++ {
 		for j := 1; j <= size; j++ {
-			fmt.Print("#")
+			if isSpace {
+				fmt.Print(" ")
+			} else {
+				fmt.Print("#")
+			}
+			isSpace = !isSpace
+		}
+		if size%2 == 0 {
+			isSpace = !isSpace
 		}
 		fmt.Println()
 	}

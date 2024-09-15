@@ -21,7 +21,7 @@ const (
 	Rate
 )
 
-func (b *Book) saveBook(ID int, title string, author string, year int, size int, rate float32) Book {
+func (b *Book) saveBook(id int, title string, author string, year int, size int, rate float32) Book {
 	book := Book{
 		ID:     ID,
 		Title:  title,
@@ -65,7 +65,7 @@ func actionSelection(count *int, books map[int]Book) {
 
 	switch action {
 	case 1:
-		*count = *count + 1
+		*count++
 		books[*count] = scanBook(*count)
 		book = books[*count]
 		actionSelection(count, books)

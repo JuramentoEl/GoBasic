@@ -23,7 +23,7 @@ const (
 
 func (b *Book) saveBook(id int, title string, author string, year int, size int, rate float32) Book {
 	book := Book{
-		ID:     ID,
+		ID:     id,
 		Title:  title,
 		Author: author,
 		Year:   year,
@@ -53,7 +53,6 @@ func main() {
 }
 
 func actionSelection(count *int, books map[int]Book) {
-
 	var action int
 	var book Book
 
@@ -80,7 +79,8 @@ func actionSelection(count *int, books map[int]Book) {
 		var book1, book2 int
 		var filed indexField
 		var result bool
-		fmt.Println("В базе ", *count, " книг. Введите номера книг для сранение и имя поля через пробел (1 - year, 2 - size или  3 - rate)")
+		fmt.Print("В базе ", *count, " книг. ")
+		fmt.Println("Введите номера книг для сранение и имя поля через пробел (1 - year, 2 - size или  3 - rate)")
 		fmt.Scanln(&book1, &book2, &filed)
 		result = comparisonBooks(books[book1], books[book2], filed)
 		fmt.Println(result)
@@ -88,8 +88,7 @@ func actionSelection(count *int, books map[int]Book) {
 	}
 }
 
-func scanBook(ID int) Book {
-
+func scanBook(id int) Book {
 	var title, author string
 	var year, size int
 	var rate float32
@@ -106,28 +105,20 @@ func scanBook(ID int) Book {
 	fmt.Scanln(&size)
 	fmt.Print("Редкость: ")
 	fmt.Scanln(&rate)
-
-	book = book.saveBook(ID, title, author, year, size, rate)
+	book = book.saveBook(id, title, author, year, size, rate)
 
 	return book
 }
 
 func comparisonBooks(book1 Book, book2 Book, filed indexField) bool {
-
 	switch filed {
-	case 1:
+	case Year:
 		return book1.Year > book2.Year
-	case 2:
+	case Size:
 		return book1.Size > book2.Size
-	case 3:
+	case Rate:
 		return book1.Rate > book2.Rate
 	}
 
 	return false
-
 }
-
-//Реализуйте структуру с методом позволяющим сравнивать книги по полям Year, Size, Rate.
-//Выбор режима сравнения задается в конструкторе структуры через перечисление (enum).
-//Метод принимает 2 книги и выдает true если первый аргумент больше второго и false если наоборот.
-//Обратите внимание на value и pointer ресиверы

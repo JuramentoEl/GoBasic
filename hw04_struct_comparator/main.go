@@ -23,7 +23,7 @@ const (
 )
 
 func (b *book) setBook(id int, title string, author string, year int, size int, rate float32) book {
-	book := book{
+	bookObject := book{
 		ID:     id,
 		Title:  title,
 		Author: author,
@@ -32,7 +32,7 @@ func (b *book) setBook(id int, title string, author string, year int, size int, 
 		Rate:   rate,
 	}
 
-	return book
+	return bookObject
 }
 
 func (b *book) getBook() bool {
@@ -46,8 +46,8 @@ func (b *book) getBook() bool {
 	return true
 }
 
-func (b *book) setFiledComparison(FiledComparison indexField) {
-	b.FiledComparison = FiledComparison
+func (b *book) setFiledComparison(filedComparison indexField) {
+	b.FiledComparison = filedComparison
 }
 
 func (b *book) getFiledComparison() indexField {
@@ -105,7 +105,7 @@ func scanBook(id int) book {
 	var title, author string
 	var year, size int
 	var rate float32
-	var book book
+	var bookObject book
 
 	fmt.Println("Ввод данных книги")
 	fmt.Print("Название: ")
@@ -118,9 +118,9 @@ func scanBook(id int) book {
 	fmt.Scanln(&size)
 	fmt.Print("Редкость: ")
 	fmt.Scanln(&rate)
-	book = book.setBook(id, title, author, year, size, rate)
+	bookObject = bookObject.setBook(id, title, author, year, size, rate)
 
-	return book
+	return bookObject
 }
 
 func comparisonBooks(book1 book, book2 book) bool {

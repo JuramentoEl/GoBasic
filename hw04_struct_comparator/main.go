@@ -16,7 +16,7 @@ type Book struct {
 	filedComparison IndexField
 }
 
-func (b *Book) Id() int {
+func (b *Book) ID() int {
 	return b.id
 }
 
@@ -40,11 +40,11 @@ func (b *Book) Rate() float32 {
 	return b.rate
 }
 
-func (b *Book) FiledComparison() indexField {
+func (b *Book) FiledComparison() IndexField {
 	return b.filedComparison
 }
 
-func (b *Book) SetId(id int) {
+func (b *Book) SetID(id int) {
 	b.id = id
 }
 
@@ -68,18 +68,18 @@ func (b *Book) SetRate(rate float32) {
 	b.rate = rate
 }
 
-func (b *Book) SetFiledComparison(filedComparison indexField) {
+func (b *Book) SetFiledComparison(filedComparison IndexField) {
 	b.filedComparison = filedComparison
 }
 
 const (
-	Year indexField = iota + 1
+	Year IndexField = iota + 1
 	Size
 	Rate
 )
 
 func (b *Book) getBook() bool {
-	fmt.Println("ID: ", b.Id())
+	fmt.Println("ID: ", b.ID())
 	fmt.Println("Title: ", b.Title())
 	fmt.Println("Author: ", b.Author())
 	fmt.Println("Year: ", b.Year())
@@ -90,9 +90,8 @@ func (b *Book) getBook() bool {
 }
 
 func saveBook(id int, title string, author string, year int, size int, rate float32) Book {
-
 	book := Book{}
-	book.SetId(id)
+	book.SetID(id)
 	book.SetTitle(title)
 	book.SetAuthor(author)
 	book.SetYear(year)
@@ -134,7 +133,7 @@ func actionSelection(count *int, books map[int]Book) {
 		actionSelection(count, books)
 	case 3:
 		var bookIndex1, bookIndex2 int
-		var filed indexField
+		var filed IndexField
 		var result bool
 		fmt.Print("В базе ", *count, " книг. ")
 		fmt.Println("Введите номера книг для сранение и имя поля через пробел (1 - year, 2 - size или  3 - rate)")

@@ -125,18 +125,6 @@ func (c Comparator) Compare(book1, book2 *Book) bool {
 	return false
 }
 
-func saveBook(id int, title string, author string, year int, size int, rate float32) Book {
-	book := Book{}
-	book.SetID(id)
-	book.SetTitle(title)
-	book.SetAuthor(author)
-	book.SetYear(year)
-	book.SetSize(size)
-	book.SetRate(rate)
-
-	return book
-}
-
 func main() {
 	books := make(map[int]*Book)
 	count := 0
@@ -146,8 +134,6 @@ func main() {
 
 func actionSelection(count *int, books map[int]*Book) {
 	var action int
-	//var book2, book1 Book
-	//var comparator Comparator
 
 	fmt.Println("1: сохранить книгу")
 	fmt.Println("2: получить данные о книге")
@@ -159,7 +145,6 @@ func actionSelection(count *int, books map[int]*Book) {
 	case 1:
 		*count++
 		books[*count] = scanBook(*count)
-		//book2 = books[*count]
 		actionSelection(count, books)
 	case 2:
 		var IDBook int

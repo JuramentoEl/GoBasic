@@ -18,6 +18,14 @@ func (c *Comparator) SetFieldCompare(fieldCompare IndexField) {
 	c.fieldCompare = fieldCompare
 }
 
+func NewComparator(fieldComapre IndexField) *Comparator {
+	comparator := Comparator{
+		fieldCompare: fieldComapre,
+	}
+
+	return &comparator
+}
+
 type Book struct {
 	id     int
 	title  string
@@ -92,6 +100,19 @@ func (b *Book) getBook() bool {
 	return true
 }
 
+func NewBook(id int, title, author string, year, size int, rate float32) *Book {
+	book := Book{
+		id:     id,
+		title:  title,
+		author: author,
+		year:   year,
+		size:   size,
+		rate:   rate,
+	}
+
+	return &book
+}
+
 func (c Comparator) Compare(book1, book2 *Book) bool {
 	switch c.FieldCompare() {
 	case Year:
@@ -117,16 +138,16 @@ func saveBook(id int, title string, author string, year int, size int, rate floa
 }
 
 func main() {
-	books := make(map[int]Book)
+	books := make(map[int]*Book)
 	count := 0
 
 	actionSelection(&count, books)
 }
 
-func actionSelection(count *int, books map[int]Book) {
+func actionSelection(count *int, books map[int]*Book) {
 	var action int
-	var book2, book1 Book
-	var comparator Comparator
+	//var book2, book1 Book
+	//var comparator Comparator
 
 	fmt.Println("1: сохранить книгу")
 	fmt.Println("2: получить данные о книге")
@@ -138,36 +159,32 @@ func actionSelection(count *int, books map[int]Book) {
 	case 1:
 		*count++
 		books[*count] = scanBook(*count)
-		book2 = books[*count]
+		//book2 = books[*count]
 		actionSelection(count, books)
 	case 2:
 		var IDBook int
 		fmt.Print("В базе ", *count, " книг. Выберете одну: ")
 		fmt.Scanln(&IDBook)
-		book2 = books[IDBook]
-		book2.getBook()
+		book := books[IDBook]
+		book.getBook()
 		actionSelection(count, books)
 	case 3:
 		var bookIndex1, bookIndex2 int
 		var filed IndexField
-		var result bool
 		fmt.Print("В базе ", *count, " книг. ")
 		fmt.Println("Введите номера книг для сранение и имя поля через пробел (1 - year, 2 - size или  3 - rate)")
 		fmt.Scanln(&bookIndex1, &bookIndex2, &filed)
-		book1 = books[bookIndex1]
-		book2 = books[bookIndex2]
-		comparator.SetFieldCompare(filed)
-		result = comparator.Compare(&book1, &book2)
+		comparator := NewComparator(filed)
+		result := comparator.Compare(books[bookIndex1], books[bookIndex2])
 		fmt.Println(result)
 		actionSelection(count, books)
 	}
 }
 
-func scanBook(id int) Book {
+func scanBook(id int) *Book {
 	var title, author string
 	var year, size int
 	var rate float32
-	var bookObject Book
 
 	fmt.Println("Ввод данных книги")
 	fmt.Print("Название: ")
@@ -180,7 +197,7 @@ func scanBook(id int) Book {
 	fmt.Scanln(&size)
 	fmt.Print("Редкость: ")
 	fmt.Scanln(&rate)
-	bookObject = saveBook(id, title, author, year, size, rate)
+	book := NewBook(id, title, author, year, size, rate)
 
-	return bookObject
+	return book
 }

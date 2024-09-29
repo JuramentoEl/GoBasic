@@ -14,11 +14,11 @@ func main() {
 		size = 8
 	}
 
-	chessboerd := getChessboerd(size)
+	chessboerd := GetChessboerd(size)
 	fmt.Print(chessboerd)
 }
 
-func getChessboerd(size int) string {
+func GetChessboerd(size int) string {
 
 	var result string
 

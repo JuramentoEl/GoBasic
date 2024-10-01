@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/JuramentoEl/GoBasic/hw02_fix_app/printer"
-	"github.com/JuramentoEl/GoBasic/hw02_fix_app/reader"
-	"github.com/JuramentoEl/GoBasic/hw02_fix_app/types"
+	"github.com/JuramentoEl/GoBasic/hw06_testing/hw02_fix_app/printer"
+	"github.com/JuramentoEl/GoBasic/hw06_testing/hw02_fix_app/reader"
+	"github.com/JuramentoEl/GoBasic/hw06_testing/hw02_fix_app/types"
 )
 
 func main() {

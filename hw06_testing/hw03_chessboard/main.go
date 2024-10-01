@@ -19,23 +19,22 @@ func main() {
 }
 
 func GetChessboerd(size int) string {
-
 	var result string
 
 	isSpace := false
 	for i := 1; i <= size; i++ {
 		for j := 1; j <= size; j++ {
 			if isSpace {
-				result = result + " "
+				result += " "
 			} else {
-				result = result + "#"
+				result += "#"
 			}
 			isSpace = !isSpace
 		}
 		if size%2 == 0 {
 			isSpace = !isSpace
 		}
-		result = result + "\r\n"
+		result += "\r\n"
 	}
 
 	return result

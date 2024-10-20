@@ -12,11 +12,10 @@ func main() {
 }
 
 func CountWords(s string) map[string]int {
-
 	var LowerWord string
+
 	result := make(map[string]int)
 	fmt.Println(s)
-	//words := strings.Fields(s)
 	words := strings.Split(s, " ")
 	fmt.Println(words)
 	for _, word := range words {
@@ -25,6 +24,5 @@ func CountWords(s string) map[string]int {
 			result[LowerWord]++
 		}
 	}
-
 	return result
 }

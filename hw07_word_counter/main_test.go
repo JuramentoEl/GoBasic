@@ -30,9 +30,6 @@ func TestCountWords(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			got := CountWords(tc.s)
-			//if got != tc.expected {
-			//	t.Errorf("test(%q) = %v; want %v", tc.name, got, tc.expected)
-			//}
 			require.Equal(t, tc.expected, got)
 		})
 	}

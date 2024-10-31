@@ -17,6 +17,15 @@ type Book struct {
 	Rate   float32
 }
 
+type SiteBookView struct {
+	ID     int     `json:"id"`
+	Title  string  `json:"title"`
+	Author string  `json:"author"`
+	Year   int     `json:"year"`
+	Size   int     `json:"size"`
+	Rate   float32 `json:"rate"`
+}
+
 func (b *Book) GetID() int {
 	return b.ID
 }
@@ -65,6 +74,25 @@ func (b *Book) SetRate(rate float32) {
 	b.Rate = rate
 }
 
+type SerializableBook struct {
+	book Book
+}
+
+func (b *Book) MarshalJSON() ([]byte, error) {
+
+	typebook := SerializableBook{book: *b}
+	return json.Marshal(typebook.book)
+}
+
+type book Book
+
+func (b *Book) UnmarshalJSON(data []byte) error {
+	j := book{}
+	err := json.Unmarshal(data, &j)
+	*b = Book(j)
+	return err
+}
+
 func NewBook(id int, title, author string, year, size int, rate float32) *Book {
 	book := Book{
 		ID:     id,
@@ -79,10 +107,18 @@ func NewBook(id int, title, author string, year, size int, rate float32) *Book {
 }
 
 func main() {
+
+	//var books []Book
 	book1 := NewBook(1, "Мастер и Маргарита", "Михаил Булгаков", 2018, 512, 2)
 	JSONTransformation(book1)
 
-	book2 := &ProtoBook.Book{
+	books := make([]Book, 0, 2)
+	book2 := NewBook(2, "Преступление и наказание", "Федор Достоевский", 2023, 592, 6)
+	books = append(books, *book1)
+	books = append(books, *book2)
+	JSONTransformationSlice(books)
+
+	book3 := &ProtoBook.Book{
 		Id:     2,
 		Title:  "Преступление и наказание",
 		Author: "Федор Достоевский",
@@ -90,7 +126,22 @@ func main() {
 		Size:   592,
 		Rate:   6,
 	}
-	ProtoTransformation(book2)
+	ProtoTransformation(book3)
+
+	book4 := &ProtoBook.Book{
+		Id:     1,
+		Title:  "Мастер и Маргарита",
+		Author: "Михаил Булгаков",
+		Year:   2018,
+		Size:   512,
+		Rate:   2,
+	}
+	//booksProto := make([]ProtoBook.Book, 0, 2)
+	var booksProto ProtoBook.Books
+	booksProto.Book = append(booksProto.Book, book3)
+	booksProto.Book = append(booksProto.Book, book4)
+
+	ProtoTransformationSlice(&booksProto)
 }
 
 func JSONTransformation(book *Book) {
@@ -117,6 +168,24 @@ func JSONUnmarshal(j []byte) (*Book, error) {
 	var book Book
 	err := json.Unmarshal(j, &book)
 	return &book, err
+}
+
+func JSONTransformationSlice(books []Book) {
+	j, err := json.Marshal(books)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	fmt.Printf("books json: %s\n", j)
+
+	var books2 []Book
+	err = json.Unmarshal(j, &books2)
+
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	fmt.Printf("books slice: %v\n", books2)
 }
 
 func ProtoTransformation(book *ProtoBook.Book) {
@@ -147,4 +216,22 @@ func ProtoUnmarshal(j []byte) (*ProtoBook.Book, error) {
 
 	err := proto.Unmarshal(j, &book)
 	return &book, err
+}
+
+func ProtoTransformationSlice(books *ProtoBook.Books) {
+	data, err := proto.Marshal(books)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+	fmt.Printf("books proto: %s\n", data)
+
+	var books2 ProtoBook.Books
+	err = proto.Unmarshal(data, &books2)
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		return
+	}
+
+	fmt.Printf("books message: %v\n", &books2)
 }

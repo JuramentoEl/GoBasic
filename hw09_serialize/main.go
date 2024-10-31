@@ -78,13 +78,12 @@ type SerializableBook struct {
 	book Book
 }
 
-func (b *Book) MarshalJSON() ([]byte, error) {
+type book Book
 
+func (b *Book) MarshalJSON() ([]byte, error) {
 	typebook := SerializableBook{book: *b}
 	return json.Marshal(typebook.book)
 }
-
-type book Book
 
 func (b *Book) UnmarshalJSON(data []byte) error {
 	j := book{}
@@ -107,8 +106,6 @@ func NewBook(id int, title, author string, year, size int, rate float32) *Book {
 }
 
 func main() {
-
-	//var books []Book
 	book1 := NewBook(1, "Мастер и Маргарита", "Михаил Булгаков", 2018, 512, 2)
 	JSONTransformation(book1)
 
@@ -136,7 +133,6 @@ func main() {
 		Size:   512,
 		Rate:   2,
 	}
-	//booksProto := make([]ProtoBook.Book, 0, 2)
 	var booksProto ProtoBook.Books
 	booksProto.Book = append(booksProto.Book, book3)
 	booksProto.Book = append(booksProto.Book, book4)
@@ -180,7 +176,6 @@ func JSONTransformationSlice(books []Book) {
 
 	var books2 []Book
 	err = json.Unmarshal(j, &books2)
-
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return

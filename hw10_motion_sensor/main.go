@@ -9,36 +9,26 @@ import (
 
 func main() {
 	sensorChannel := make(chan int64)
-	stopChannel := make(chan bool)
 	meanChannel := make(chan int64)
-	doneChannel := make(chan bool)
 
-	go randomCounter(sensorChannel, stopChannel)
-	go arithmeticMean(sensorChannel, meanChannel, doneChannel)
+	go randomCounter(sensorChannel)
+	go arithmeticMean(sensorChannel, meanChannel)
 
-LOOP:
-	for {
-		select {
-		case <-stopChannel:
-			close(sensorChannel)
-		case val := <-meanChannel:
-			fmt.Printf("Arithmetic mean %d\n", val)
-		case <-doneChannel:
-			break LOOP
-		}
+	for val := range meanChannel {
+		fmt.Printf("Arithmetic mean %d\n", val)
 	}
 }
 
-func randomCounter(channel chan int64, stop chan bool) {
+func randomCounter(channel chan int64) {
 	ticker := time.NewTicker(time.Second)
 	defer ticker.Stop()
+	defer close(channel)
 
 	timeout := time.After(time.Minute)
 
 	for {
 		select {
 		case <-timeout:
-			stop <- true
 			return
 		case <-ticker.C:
 			data, _ := rand.Int(rand.Reader, big.NewInt(100))
@@ -47,8 +37,9 @@ func randomCounter(channel chan int64, stop chan bool) {
 	}
 }
 
-func arithmeticMean(sensor chan int64, mean chan int64, done chan bool) {
+func arithmeticMean(sensor chan int64, mean chan int64) {
 	var summ int64
+	defer close(mean)
 	for {
 		summ = 0
 		for i := 0; i < 10; i++ {
@@ -58,7 +49,7 @@ func arithmeticMean(sensor chan int64, mean chan int64, done chan bool) {
 				if i == 9 {
 					mean <- (summ / 10)
 				}
-				done <- true
+				return
 			}
 		}
 		mean <- (summ / 10)

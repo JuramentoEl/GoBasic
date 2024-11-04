@@ -19,23 +19,16 @@ func TestArithmeticMean(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			sensorChannel := make(chan int64)
 			meanChannel := make(chan int64)
-			doneChannel := make(chan bool)
-			go arithmeticMean(sensorChannel, meanChannel, doneChannel)
+			go arithmeticMean(sensorChannel, meanChannel)
 			var result []int64
 			for _, sensor := range tc.sensor {
 				sensorChannel <- sensor
 			}
 			close(sensorChannel)
-		LOOP:
-			for {
-				select {
-				case mean := <-meanChannel:
-					result = append(result, mean)
-				case <-doneChannel:
-					require.Equal(t, tc.expected, result)
-					break LOOP
-				}
+			for mean := range meanChannel {
+				result = append(result, mean)
 			}
+			require.Equal(t, tc.expected, result)
 		})
 	}
 }

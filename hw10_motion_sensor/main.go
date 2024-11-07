@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	sensorChannel := make(chan int64, 60)
+	sensorChannel := make(chan int64)
 	meanChannel := make(chan int64)
 
 	go randomCounter(sensorChannel)
@@ -32,7 +32,11 @@ func randomCounter(channel chan int64) {
 			return
 		case <-ticker.C:
 			data, _ := rand.Int(rand.Reader, big.NewInt(100))
-			channel <- data.Int64()
+			select {
+			case <-timeout:
+				return
+			case channel <- data.Int64():
+			}
 		}
 	}
 }

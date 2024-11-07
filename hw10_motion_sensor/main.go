@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	sensorChannel := make(chan int64)
+	sensorChannel := make(chan int64, 60)
 	meanChannel := make(chan int64)
 
 	go randomCounter(sensorChannel)

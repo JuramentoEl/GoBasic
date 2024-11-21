@@ -1,0 +1,5 @@
+running out of memory: 2
+runtime error: 2
+DBMS error: 1
+
+Количество записей: 5

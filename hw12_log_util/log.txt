@@ -1,0 +1,10 @@
+1,info,New object
+2,info,New object
+3,warning,running out of memory
+4,error,runtime error
+5,warning,running out of memory
+6,error,runtime error
+7,info,change object
+8,info,change object
+9,error,DBMS error
+10,info,New object

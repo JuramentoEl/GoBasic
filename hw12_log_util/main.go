@@ -52,7 +52,6 @@ func main() {
 		}
 	}
 	writeCsv(pathOutput, count, data)
-	fmt.Println(count)
 }
 
 func defaultData(pathFile, levelLog, pathOutput *string) error {

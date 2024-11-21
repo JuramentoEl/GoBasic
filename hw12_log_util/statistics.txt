@@ -1,5 +1,7 @@
+DBMS error: 1
+New object: 3
 running out of memory: 2
 runtime error: 2
-DBMS error: 1
+change object: 2
 
-Количество записей: 5
+Количество записей: 10
